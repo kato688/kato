@@ -47,6 +47,7 @@ function LinkedLists(){
         }
         
     }
+
     this.shift=function(){
         if(firstNode!==null && this.length>1){
             firstNode=firstNode.next;
@@ -83,8 +84,62 @@ function LinkedLists(){
     this.toArray=function(){
         let arr=[];
         this.forEach( e => arr.push(e));
+
         return arr;
     }
+    
+    this.remove=function(index){
+        let value;
+        stopCount(function(e,i){ 
+            value=e.value;
+            let prev=e.prev;
+            let next=e.next;
+            if(index ===i){
+                if(e.prev!=null){
+                    prev.next=next;
+                    return true;
+                }
+                    if(e.next!=null){
+                        firstNode=firstNode.next;
+                        return true;
+                    }
+                        if(e.next===null && e.prev===null){
+                            firstNode=null;
+                            lastNode=null;
+                            return true;
+                        }
+            return true;
+            }
+        });
+        this.length--;
+        return value;
+    }
+
+    this.includes=function(value){
+        let result=false;
+        stopCount((elem) => {
+            if(elem.value === value){
+                result=true;
+                return true;
+            }
+            
+        })
+        return result;
+    }
+
+    function stopCount(func){
+        let start=firstNode;
+        let index=0;
+        while(start!=null){
+            if(func(start,index)){
+                break;
+            }
+            start=start.next;
+            index++;
+        }
+    }
+
+
 
 
 }
@@ -109,13 +164,16 @@ nodes.shift();
 nodes.shift();
 nodes.shift();
 nodes.shift(); */
+//console.log(nodes.includes(3));
+
+console.log(nodes.remove(2));
 
 
 
 console.log(nodes.toArray());
 nodes.forEach(e => console.log(e));
-console.log("Let Try reverse!");
+/* console.log("Let Try reverse!");
 nodes.forEachReverse((e,i)=>{
     console.log( e + " " + " index is: "+ " " + i)
-});
+}); */
 console.log(nodes.length);
